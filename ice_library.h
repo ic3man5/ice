@@ -34,6 +34,7 @@ public:
 	Library(std::string name);
 	~Library();
 	bool isLoaded() const throw();
+	std::string name() const { return m_name; }
 	
 	HMODULE const& _library() const throw();
 };

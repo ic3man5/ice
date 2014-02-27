@@ -27,9 +27,13 @@ public:
 	Function(ice::Library* library, std::string name)
 		: m_name(name)
 	{
+		m_lib = library;
 		if (library == NULL)
 		{
-			throw ice::Exception("Library is NULL");
+			std::stringstream ss;
+			ss << "Library is NULL, can't call function: '" <<
+				name << "'";
+			throw ice::Exception(ss.str());
 		}
 		#if (defined(_WIN32) || defined(__WIN32__))
 			m_func = reinterpret_cast<Signature*>(
@@ -56,7 +60,12 @@ public:
 	operator Signature *() const throw(ice::Exception)
 	{
 		if (m_func == NULL)
-			throw ice::Exception("Function address " + m_name + " isn't resolved");
+		{
+			std::stringstream ss;
+			ss << "Function address '" << m_name + "' isn't resolved for library: '" <<
+				m_lib->name() << "'";
+			throw ice::Exception(ss.str());
+		}
 		return m_func;
 	}
 	bool isValid() const throw() { return m_func != NULL; }
