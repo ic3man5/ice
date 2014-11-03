@@ -52,7 +52,7 @@ public:
 			{
 				std::stringstream err;
 				err << "Failed to Retrieve address of function '" << name <<
-					"': " << dl_error();
+					"': " << dlerror();
 				throw ice::Exception(err.str());
 			}
 		#endif
