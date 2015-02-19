@@ -42,7 +42,8 @@ public:
         {
             std::stringstream err;
             err << "Failed to Retrieve address of function '" << name <<
-                   "': Windows Error #" << GetLastError();
+                   "': Windows Error #" << GetLastError() << " for library '" <<
+                   library->name() << "'";
             throw ice::Exception(err.str());
         }
 #else
@@ -52,7 +53,8 @@ public:
         {
             std::stringstream err;
             err << "Failed to Retrieve address of function '" << name <<
-                   "': " << dlerror();
+                   "': " << dlerror() << " for library '" <<
+                   library->name() << "'";
             throw ice::Exception(err.str());
         }
 #endif

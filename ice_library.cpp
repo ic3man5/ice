@@ -12,6 +12,7 @@ using namespace ice;
 
 Library::Library(std::string name)
 {
+    m_name = name;
 #if (defined(_WIN32) || defined(__WIN32__))
 #ifdef UNICODE
     int len = MultiByteToWideChar(CP_UTF8, 0, name.c_str(), -1, NULL, 0);
