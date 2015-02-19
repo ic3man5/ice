@@ -58,12 +58,12 @@ Library::~Library()
     }
 }
 
-bool Library::isLoaded() const throw()
+bool Library::isLoaded() const
 {
     return m_lib != NULL;
 }
 
-HMODULE const& Library::_library() const throw()
+HMODULE const& Library::_library() const
 {
     return m_lib;
 }

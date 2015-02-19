@@ -59,7 +59,7 @@ public:
         }
 #endif
     }
-    operator Signature *() const throw(ice::Exception)
+    operator Signature *() const
     {
         if (m_func == NULL)
         {
@@ -70,8 +70,8 @@ public:
         }
         return m_func;
     }
-    bool isValid() const throw() { return m_func != NULL; }
-    std::string name() const throw() { return m_name; }
+    bool isValid() const { return m_func != NULL; }
+    std::string name() const { return m_name; }
 
 protected:
     Signature* m_func;

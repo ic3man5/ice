@@ -33,10 +33,10 @@ class ice::Library
 public:
     Library(std::string name);
     ~Library();
-    bool isLoaded() const throw();
+    bool isLoaded() const;
     std::string name() const { return m_name; }
 
-    HMODULE const& _library() const throw();
+    HMODULE const& _library() const;
 };
 
 #endif // ice_library.h

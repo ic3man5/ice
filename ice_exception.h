@@ -24,7 +24,7 @@ public:
     ~Exception() throw() {}
     const char* what() const throw()
     { return this->m_msg.c_str(); }
-    std::string const whatString() const throw()
+    std::string const whatString() const
     { return this->m_msg; }
 };
 
