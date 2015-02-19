@@ -3,7 +3,7 @@
  *
  * @copyright 2011 David Rebbe
  */
- 
+
 #ifndef __ICE_EXCEPTION_H__
 #define __ICE_EXCEPTION_H__
 
@@ -12,20 +12,20 @@
 
 namespace ice
 {
-	class Exception;
+class Exception;
 };
 
 class ice::Exception : std::exception
 {
-	const std::string m_msg;
+    const std::string m_msg;
 public:
-	Exception(const std::string msg)
-		: m_msg(msg) {}
-	~Exception() throw() {}
-	const char* what() const throw()
-	{ return this->m_msg.c_str(); }
-	std::string const whatString() const throw()
-	{ return this->m_msg; }
+    Exception(const std::string msg)
+        : m_msg(msg) {}
+    ~Exception() throw() {}
+    const char* what() const throw()
+    { return this->m_msg.c_str(); }
+    std::string const whatString() const throw()
+    { return this->m_msg; }
 };
 
 #endif // ice_exception.h
