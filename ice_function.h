@@ -32,29 +32,77 @@ public:
         {
             std::stringstream ss;
             ss << "Library is NULL, can't call function: '" <<
-                  name << "'";
+                name << "'";
             throw ice::Exception(ss.str());
         }
 #if (defined(_WIN32) || defined(__WIN32__))
         m_func = reinterpret_cast<Signature*>(
-                    GetProcAddress(library->_library(), name.c_str()));
+            GetProcAddress(library->_library(), name.c_str()));
         if (m_func == NULL)
         {
             std::stringstream err;
             err << "Failed to Retrieve address of function '" << name <<
-                   "': Windows Error #" << GetLastError() << " for library '" <<
-                   library->name() << "'";
+                "': Windows Error #" << GetLastError() << " for library '" <<
+                library->name() << "'";
             throw ice::Exception(err.str());
         }
 #else
         m_func = reinterpret_cast<Signature*>(
-                    dlsym(library->_library(), name.c_str()));
+            dlsym(library->_library(), name.c_str()));
         if (m_func == NULL)
         {
             std::stringstream err;
             err << "Failed to Retrieve address of function '" << name <<
-                   "': " << dlerror() << " for library '" <<
-                   library->name() << "'";
+                "': " << dlerror() << " for library '" <<
+                library->name() << "'";
+            throw ice::Exception(err.str());
+        }
+#endif
+    }
+    Function(ice::Library* library, unsigned int ordinal)
+        : m_name(__ordinalToString(ordinal))
+    {
+        /*
+        std::stringstream temp;
+        temp << "Ordinal " << ordinal;
+        m_name = temp.str().c_str();
+        */
+        // Make sure the ordinal fits inside the lower word (16-bit)
+        if (ordinal > 0xFFFF)
+        {
+            std::stringstream ss;
+            ss << "Can't call function: '" <<
+                m_name << "' due to ordinal number being over 16-bit limitation";
+            throw ice::Exception(ss.str());
+        }
+        m_lib = library;
+        if (library == NULL)
+        {
+            std::stringstream ss;
+            ss << "Library is NULL, can't call function: '" <<
+                m_name << "'";
+            throw ice::Exception(ss.str());
+        }
+#if (defined(_WIN32) || defined(__WIN32__))
+        m_func = reinterpret_cast<Signature*>(
+            GetProcAddress(library->_library(), MAKEINTRESOURCEA(ordinal)));
+        if (m_func == NULL)
+        {
+            std::stringstream err;
+            err << "Failed to Retrieve address of function '" << m_name <<
+                "': Windows Error #" << GetLastError() << " for library '" <<
+                library->name() << "'";
+            throw ice::Exception(err.str());
+        }
+#else
+        m_func = reinterpret_cast<Signature*>(
+            dlsym(library->_library(), (const char*)ordinal));
+        if (m_func == NULL)
+        {
+            std::stringstream err;
+            err << "Failed to Retrieve address of function '" << m_name <<
+                "': " << dlerror() << " for library '" <<
+                library->name() << "'";
             throw ice::Exception(err.str());
         }
 #endif
@@ -76,6 +124,15 @@ public:
 protected:
     Signature* m_func;
     const std::string m_name;
+
+private:
+    // This gets around only being able to initialize const objects in constructor initializer lists
+    static std::string __ordinalToString(unsigned int x)
+    {
+        std::stringstream ss;
+        ss << "Ordinal #" << x;
+        return ss.str();
+    }
 };
 
 #endif // ice_function.h
