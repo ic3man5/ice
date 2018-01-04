@@ -1,7 +1,7 @@
-#ice Library
+# ice Library
 This is a very simple class to make dynamic library loads simple and easy. This code should multi-platform. The library gets automatically cleaned up and ice::Exception is thrown when an error occurs.
 
-###Example Code
+### Example Code
 ```
 #include "ice.h"
 
@@ -21,7 +21,30 @@ catch (ice::Exception& ex)
 
 ```
 
-###License
+Using Library Manager:
+
+```
+#include "ice.h"
+
+try
+{
+    ice::LibraryManager mgr;
+    mgr.add("first", "foo");
+    mgr.add("second", "foo2");
+    ice::Function<int (int, int)> func(&mgr["first"], "foofunc");
+    int i = func(2, 5);
+}
+catch (ice::Exception& ex)
+{
+    // ex.whatString() will look similar to this:
+    // Failed to Retrieve address of function 'foofunc': Windows Error #0 for 'foo'
+}
+
+// lib and func auto clean up when they go out of scope
+
+```
+
+### License
 The MIT License (MIT)
 
 Copyright (c) <2015> <David Rebbe>
