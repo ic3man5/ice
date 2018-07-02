@@ -28,19 +28,72 @@ Using Library Manager:
 
 try
 {
-    ice::LibraryManager mgr;
-    mgr.add("first", "foo");
-    mgr.add("second", "foo2");
-    ice::Function<int (int, int)> func(&mgr["first"], "foofunc");
-    int i = func(2, 5);
+    std::cout << "Testing LibraryManager...\n\n";
+    ice::LibraryManager& mgr = ice::LibraryManager::getLibraryManager();
+    mgr.add("iesetup", "iesetup.dll");
+    mgr.add("iertutil", "iertutil.dll");
+    mgr.add("ieapfltr", "ieapfltr.dll");
+    mgr.add("iedkcs32", "iedkcs32.dll");
+    mgr.add("iesetup4", "iesetup.dll");
+    mgr.add("iesetup5", "iesetup.dll");
+    mgr.add("iesetup6", "iesetup.dll");
+    mgr.add("iesetup7", "iesetup.dll");
+    mgr.add("iesetup8", "iesetup.dll");
+    mgr.add("iesetup9", "iesetup.dll");
+    std::cout << "Path: " << mgr["iesetup"].getPath() << "\n";
+    
+    std::vector<std::string> names = mgr.getLibraryNames();
+    for (int i=0; i < names.size(); ++i)
+        std::cout << "Loaded Library #" << i+1 << ": " << names.at(i) << "\n\t"
+            << mgr[names.at(i)].name() << ":\t" << mgr[names.at(i)].getPath() << "\n\n";
+            
+    mgr["nope"].getPath();
 }
 catch (ice::Exception& ex)
 {
-    // ex.whatString() will look similar to this:
-    // Failed to Retrieve address of function 'foofunc': Windows Error #0 for 'foo'
+    std::cout << ex.what() << "\n";
+    return 1;
 }
 
 // lib and func auto clean up when they go out of scope
+
+
+
+// Output:
+Testing LibraryManager...
+
+Path: C:\Windows\system32\iesetup.dll
+Loaded Library #1: ieapfltr
+       ieapfltr.dll:   C:\Windows\system32\ieapfltr.dll
+
+Loaded Library #2: iedkcs32
+       iedkcs32.dll:   C:\Windows\system32\iedkcs32.dll
+
+Loaded Library #3: iertutil
+       iertutil.dll:   C:\Windows\syswow64\iertutil.dll
+
+Loaded Library #4: iesetup
+       iesetup.dll:    C:\Windows\system32\iesetup.dll
+
+Loaded Library #5: iesetup4
+       iesetup.dll:    C:\Windows\system32\iesetup.dll
+
+Loaded Library #6: iesetup5
+       iesetup.dll:    C:\Windows\system32\iesetup.dll
+
+Loaded Library #7: iesetup6
+       iesetup.dll:    C:\Windows\system32\iesetup.dll
+
+Loaded Library #8: iesetup7
+       iesetup.dll:    C:\Windows\system32\iesetup.dll
+
+Loaded Library #9: iesetup8
+       iesetup.dll:    C:\Windows\system32\iesetup.dll
+
+Loaded Library #10: iesetup9
+       iesetup.dll:    C:\Windows\system32\iesetup.dll
+
+LibraryManager Failed to retreive 'nope' From loaded library list!
 
 ```
 

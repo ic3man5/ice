@@ -51,3 +51,12 @@ ice::Library& LibraryManager::operator[](std::string name)
     }
     return *m_libs[name];
 }
+
+
+LibraryManager& LibraryManager::getLibraryManager()
+{
+    static LibraryManager* mSingleton = NULL;
+    if (!mSingleton)
+        mSingleton = new LibraryManager();
+    return *mSingleton;
+}

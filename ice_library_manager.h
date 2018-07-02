@@ -24,6 +24,8 @@ public:
     std::vector<std::string> getLibraryNames() const;
     
     ice::Library& operator[](std::string name);
+
+    static LibraryManager& getLibraryManager();
     
 private:
     typedef std::map<std::string, ice::Library*> Libraries;
