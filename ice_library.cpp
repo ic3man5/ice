@@ -90,6 +90,8 @@ std::string Library::getPath(bool* okay)
         ss << temp;
         if (okay)
             *okay = true;
+        delete temp;
+        temp = NULL;
         return ss.str();
     }
 #else
