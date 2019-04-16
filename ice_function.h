@@ -21,8 +21,6 @@ class Function;
 template <class Signature>
 class ice::Function
 {
-    ice::Library* m_lib;
-
 public:
     Function(ice::Library* library, std::string name)
         : m_name(name)
@@ -35,6 +33,7 @@ public:
                 name << "'";
             throw ice::Exception(ss.str());
         }
+        m_libname = library->name();
 #if (defined(_WIN32) || defined(__WIN32__))
         m_func = reinterpret_cast<Signature*>(
             GetProcAddress(library->_library(), name.c_str()));
@@ -83,6 +82,7 @@ public:
                 m_name << "'";
             throw ice::Exception(ss.str());
         }
+        m_libname = library->name();
 #if (defined(_WIN32) || defined(__WIN32__))
         m_func = reinterpret_cast<Signature*>(
             GetProcAddress(library->_library(), MAKEINTRESOURCEA(ordinal)));
@@ -112,8 +112,16 @@ public:
         if (m_func == NULL)
         {
             std::stringstream ss;
-            ss << "Function address '" << m_name + "' isn't resolved for library: '" <<
-                  m_lib->name() << "'";
+            if (!m_lib)
+            {
+                ss << "Function address '" << m_name + "' isn't resolved for unloaded library: '" <<
+                    m_libname << "'";
+            }
+            else
+            {
+                ss << "Function address '" << m_name + "' isn't resolved for library: '" <<
+                    m_lib->name() << "'";
+            }
             throw ice::Exception(ss.str());
         }
         return m_func;
@@ -124,6 +132,7 @@ public:
 protected:
     Signature* m_func;
     const std::string m_name;
+    std::string m_libname;
 
 private:
     // This gets around only being able to initialize const objects in constructor initializer lists
@@ -133,6 +142,8 @@ private:
         ss << "Ordinal #" << x;
         return ss.str();
     }
+
+	ice::Library* m_lib;
 };
 
 #endif // ice_function.h

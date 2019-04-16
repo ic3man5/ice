@@ -17,15 +17,16 @@ public:
     LibraryManager();
     ~LibraryManager();
     
-    void add(std::string name, std::string path);    
+    void add(std::string name, std::string path);
     void remove(std::string name);
     void remove(ice::Library& library);
-    
+
     std::vector<std::string> getLibraryNames() const;
     
-    ice::Library& operator[](std::string name);
+    ice::Library* operator[](std::string name);
+    ice::Library* get(std::string name) { return m_libs[name]; }
 
-    static LibraryManager& getLibraryManager();
+    static LibraryManager* getLibraryManager();
     
 private:
     typedef std::map<std::string, ice::Library*> Libraries;
