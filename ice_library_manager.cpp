@@ -16,9 +16,17 @@ LibraryManager::~LibraryManager()
         this->remove(iter->first);
 }
 
-void LibraryManager::add(std::string name, std::string path)
+void LibraryManager::add(std::string name, std::string path, bool replace)
 {
-    m_libs[name] = new ice::Library(path);
+    if (replace && exists(name))
+    {
+        remove(name);
+        m_libs[name] = new ice::Library(path);
+    }
+    else if (!exists(name))
+    {
+        m_libs[name] = new ice::Library(path);
+    }
 }
 
 void LibraryManager::remove(std::string name)
@@ -48,7 +56,7 @@ std::vector<std::string> LibraryManager::getLibraryNames() const
 
 ice::Library* LibraryManager::operator[](std::string name)
 {
-    if (m_libs.find(name) == m_libs.end())
+    if (!exists(name))
     {
         std::stringstream ss;
         ss << "LibraryManager Failed to retreive '" << name << "' From loaded library list!";
@@ -57,11 +65,15 @@ ice::Library* LibraryManager::operator[](std::string name)
     return m_libs[name];
 }
 
-
-LibraryManager* LibraryManager::getLibraryManager()
+LibraryManager& LibraryManager::instance()
 {
     static LibraryManager* mSingleton = NULL;
     if (!mSingleton)
         mSingleton = new LibraryManager();
-    return mSingleton;
+    return *mSingleton;
+}
+
+bool LibraryManager::exists(std::string name) const
+{
+    return m_libs.find(name) != m_libs.end();
 }

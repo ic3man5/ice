@@ -17,7 +17,7 @@ public:
     LibraryManager();
     ~LibraryManager();
     
-    void add(std::string name, std::string path);
+    void add(std::string name, std::string path, bool replace=false);
     void remove(std::string name);
     void remove(ice::Library& library);
 
@@ -26,7 +26,9 @@ public:
     ice::Library* operator[](std::string name);
     ice::Library* get(std::string name) { return m_libs[name]; }
 
-    static LibraryManager* getLibraryManager();
+    static LibraryManager& instance();
+
+    bool exists(std::string name) const;
     
 private:
     typedef std::map<std::string, ice::Library*> Libraries;
