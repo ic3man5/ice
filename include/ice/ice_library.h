@@ -30,6 +30,7 @@ class ice::Library {
 
 public:
     Library(std::string name);
+    Library(Library&) = delete;
     ~Library();
     bool isLoaded() const;
     std::string name() const { return m_name; }
