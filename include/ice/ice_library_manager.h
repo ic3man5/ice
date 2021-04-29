@@ -13,6 +13,7 @@ class LibraryManager;
 class ice::LibraryManager {
 public:
     LibraryManager();
+    LibraryManager(LibraryManager&) = delete;
     ~LibraryManager();
 
     void add(std::string name, std::string path, bool replace = false);
