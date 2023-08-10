@@ -1,5 +1,7 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.21)
 project(ice VERSION 1.0.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
 
 add_library(ice STATIC
         src/ice_library.cpp
@@ -14,4 +16,6 @@ target_include_directories(ice PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/include/
 )
 
-target_compile_features(ice INTERFACE cxx_std_17)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
+
+add_subdirectory(tests)
