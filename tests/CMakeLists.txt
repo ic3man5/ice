@@ -10,7 +10,8 @@ add_executable(${TARGET_NAME}
     tests.cpp
     test_ice_exception.cpp
     test_ice_library.cpp
-    test_ice_function.cpp)
+    test_ice_function.cpp
+    test_ice_library_manager.cpp)
 
 #target_link_libraries(${TARGET_NAME}
 #    PUBLIC test_ice_exception)
