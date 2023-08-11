@@ -37,7 +37,12 @@ void LibraryManager::remove(std::string name)
 
 void LibraryManager::remove(ice::Library& library)
 {
-    remove(library.name());
+    for (auto iter : m_libs) {
+        if (library.name().compare(iter.second->name()) == 0) {
+            remove(iter.first);
+            break;
+        }
+    }
 }
 
 std::vector<std::string> LibraryManager::getLibraryNames() const
