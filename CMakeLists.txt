@@ -18,4 +18,7 @@ target_include_directories(ice PUBLIC
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 
+#enable testing for the project
+enable_testing()
+
 add_subdirectory(tests)
