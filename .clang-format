@@ -1,3 +1,15 @@
-BasedOnStyle: WebKit
+BasedOnStyle: Mozilla
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
 ColumnLimit: '120'
-PointerAlignment: Right
+SpaceAfterCStyleCast: 'false'
+SpaceAfterTemplateKeyword: 'false'
+SpaceBeforeAssignmentOperators: 'true'
+SpaceBeforeCpp11BracedList: 'true'
+TabWidth: 4
+IndentWidth: 4
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 4
+UseTab: Never
+MaxEmptyLinesToKeep: 1
+SortIncludes: false

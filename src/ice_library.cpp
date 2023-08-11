@@ -17,7 +17,7 @@ Library::Library(std::string name)
 #ifdef UNICODE
     int len = MultiByteToWideChar(CP_UTF8, 0, name.c_str(), -1, NULL, 0);
     if (len) {
-        wchar_t *n = new wchar_t[len];
+        wchar_t* n = new wchar_t[len];
         MultiByteToWideChar(CP_UTF8, 0, name.c_str(), -1, n, len);
         m_lib = LoadLibrary(n);
         delete[] n;
@@ -31,15 +31,20 @@ Library::Library(std::string name)
         DWORD error = GetLastError();
         LPVOID buffer = { 0 };
         err << "Failed to open library: '" << name << "'";
-        auto len
-            = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-                NULL, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&buffer, 0, NULL);
+        auto len =
+            FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+                          NULL,
+                          error,
+                          MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                          (LPTSTR)&buffer,
+                          0,
+                          NULL);
         if (len) {
             std::string msg;
 #if defined(UNICODE)
             msg = (LPSTR)buffer;
             int width = WideCharToMultiByte(CP_UTF8, 0, (LPWSTR)buffer, -1, 0, 0, NULL, NULL);
-            char *n = new char[width];
+            char* n = new char[width];
             WideCharToMultiByte(CP_UTF8, 0, (LPWSTR)buffer, -1, n, width, NULL, NULL);
             msg = n;
             delete[] n;
@@ -75,9 +80,12 @@ Library::~Library()
     }
 }
 
-bool Library::isLoaded() const { return m_lib != NULL; }
+bool Library::isLoaded() const
+{
+    return m_lib != NULL;
+}
 
-std::string Library::getPath(bool *okay)
+std::string Library::getPath(bool* okay)
 {
     if (okay)
         *okay = false;
@@ -95,7 +103,7 @@ std::string Library::getPath(bool *okay)
 #ifdef UNICODE
     int length = WideCharToMultiByte(CP_UTF8, 0, buffer, -1, NULL, 0, NULL, NULL);
     if (length) {
-        char *temp = new char[MAX_PATH];
+        char* temp = new char[MAX_PATH];
         WideCharToMultiByte(CP_UTF8, 0, buffer, -1, temp, length, NULL, NULL);
         std::stringstream ss;
         ss << temp;
@@ -119,4 +127,7 @@ std::string Library::getPath(bool *okay)
     return m_name;
 }
 
-HMODULE const &Library::_library() const { return m_lib; }
+HMODULE const& Library::_library() const
+{
+    return m_lib;
+}

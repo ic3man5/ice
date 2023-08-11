@@ -1,10 +1,11 @@
 #include "ice_library_manager.h"
 #include "ice_exception.h"
 #include <sstream>
+#include <iostream>
 
 using namespace ice;
 
-LibraryManager::LibraryManager() { }
+LibraryManager::LibraryManager() {}
 
 LibraryManager::~LibraryManager()
 {
@@ -25,15 +26,19 @@ void LibraryManager::add(std::string name, std::string path, bool replace)
 
 void LibraryManager::remove(std::string name)
 {
-    if (m_libs.find(name) == m_libs.end())
+    if (m_libs.find(name) == m_libs.end()) {
         return;
-    ice::Library *lib = m_libs[name];
+    }
+    ice::Library* lib = m_libs[name];
     delete lib;
     lib = NULL;
     m_libs.erase(name);
 }
 
-void LibraryManager::remove(ice::Library &library) { remove(library.name()); }
+void LibraryManager::remove(ice::Library& library)
+{
+    remove(library.name());
+}
 
 std::vector<std::string> LibraryManager::getLibraryNames() const
 {
@@ -45,7 +50,7 @@ std::vector<std::string> LibraryManager::getLibraryNames() const
     return names;
 }
 
-ice::Library *LibraryManager::operator[](std::string name)
+ice::Library* LibraryManager::operator[](std::string name)
 {
     if (!exists(name)) {
         std::stringstream ss;
@@ -55,12 +60,15 @@ ice::Library *LibraryManager::operator[](std::string name)
     return m_libs[name];
 }
 
-LibraryManager &LibraryManager::instance()
+LibraryManager& LibraryManager::instance()
 {
-    static LibraryManager *mSingleton = NULL;
+    static LibraryManager* mSingleton = NULL;
     if (!mSingleton)
         mSingleton = new LibraryManager();
     return *mSingleton;
 }
 
-bool LibraryManager::exists(std::string name) const { return m_libs.find(name) != m_libs.end(); }
+bool LibraryManager::exists(std::string name) const
+{
+    return m_libs.find(name) != m_libs.end();
+}
