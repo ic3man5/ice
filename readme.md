@@ -1,9 +1,12 @@
 # ice Library
+
+![](https://github.com/ic3man5/ice/actions/workflows/build.yml/badge.svg)
+
 This is a very simple class to make dynamic library loads simple and easy. This code should multi-platform. The library gets automatically cleaned up and ice::Exception is thrown when an error occurs.
 
 ### Example Code
 ```
-#include "ice.h"
+#include <ice/ice.h>
 
 try
 {
@@ -24,7 +27,7 @@ catch (ice::Exception& ex)
 Using Library Manager:
 
 ```
-#include "ice.h"
+#include <ice/ice.h>
 
 try
 {
@@ -57,7 +60,7 @@ LibraryManager Failed to retreive 'nope' From loaded library list!
 ### License
 The MIT License (MIT)
 
-Copyright (c) <2015> <David Rebbe>
+Copyright (c) <David Rebbe>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
