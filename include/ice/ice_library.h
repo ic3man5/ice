@@ -8,7 +8,6 @@
 #include <windows.h>
 #else
 #include <dlfcn.h>
-#include <link.h>
 #define HMODULE void *
 #endif
 
