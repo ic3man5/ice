@@ -20,6 +20,8 @@ target_include_directories(ice PUBLIC
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 
+target_link_libraries(ice ${CMAKE_DL_LIBS})
+
 #enable testing for the project
 enable_testing()
 
