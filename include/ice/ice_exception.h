@@ -1,11 +1,4 @@
-/**
- * Ice multiplatform dynamic library loader.
- *
- * @copyright 2011 David Rebbe
- */
-
-#ifndef __ICE_EXCEPTION_H__
-#define __ICE_EXCEPTION_H__
+#pragma once
 
 #include <stdexcept>
 #include <string>
@@ -26,5 +19,3 @@ public:
     const char *what() const throw() { return this->m_msg.c_str(); }
     std::string const whatString() const { return this->m_msg; }
 };
-
-#endif // ice_exception.h

@@ -3,16 +3,16 @@
 #include <string>
 
 TEST_CASE("LibraryBasic", "[library]") {
-    auto library = ice::Library("libtest");
+    auto library = ice::Library("${ORIGIN}/libsimple_test.so");
 
     REQUIRE( library.isLoaded() == true );
-    REQUIRE( library.name() == "libtest" );
+    REQUIRE( library.name() == "simple_test" );
 
     bool path_okay = false;
     auto path = library.getPath(&path_okay);
     INFO("Library Path: " << path);
     REQUIRE( path_okay == true );
-    REQUIRE( path.find("libtest") != std::string::npos );
+    REQUIRE( path.find("simple_test") != std::string::npos );
 
     REQUIRE( library._library() != NULL );
 

@@ -6,7 +6,7 @@
 TEST_CASE("LibraryManagerBasic", "[librarymanager]") {
     auto& mgr = ice::LibraryManager::instance();
     // Add the library and test its existance
-    mgr.add("test", "libtest");
+    mgr.add("test", "simple_test");
     REQUIRE( mgr["test"] == mgr.get("test") );
     REQUIRE ( mgr.exists("test") == true );
     // Make sure its in the list
@@ -15,13 +15,13 @@ TEST_CASE("LibraryManagerBasic", "[librarymanager]") {
     // Make sure its loaded and the name is right
     auto* library = mgr["test"];
     REQUIRE( library->isLoaded() == true );
-    REQUIRE( library->name() == "libtest" );
+    REQUIRE( library->name() == "simple_test" );
     // Test the library
     bool path_okay = false;
     auto path = library->getPath(&path_okay);
     INFO("Library Path: " << path);
     REQUIRE( path_okay == true );
-    REQUIRE( path.find("libtest") != std::string::npos );
+    REQUIRE( path.find("simple_test") != std::string::npos );
     REQUIRE( library->_library() != NULL );
     // Test a failure library being added
     try {
@@ -39,7 +39,7 @@ TEST_CASE("LibraryManagerBasic", "[librarymanager]") {
     names = mgr.getLibraryNames();
     REQUIRE( std::find(names.begin(), names.end(), "test") == names.end() );
     // Add and remove the library again, this time by name
-    mgr.add("test", "libtest");
+    mgr.add("test", "simple_test");
     REQUIRE ( mgr.exists("test") == true );
     mgr.remove("test");
     REQUIRE ( mgr.exists("test") == false );

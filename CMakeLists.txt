@@ -5,7 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_library(ice STATIC
         src/ice_library.cpp
-        src/ice_library_manager.cpp
+        src/ice_library_manager.cpp 
+        src/ice_library_name.cpp
 )
 
 target_include_directories(ice PRIVATE

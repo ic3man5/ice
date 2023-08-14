@@ -1,12 +1,10 @@
-/**
- * Ice multiplatform dynamic library loader.
- *
- * @copyright 2011 David Rebbe
- */
-
 #include "ice_library.h"
 #include "ice_exception.h"
 #include <sstream>
+
+#if !(defined(_WIN32) || defined(__WIN32__)) || !(defined(__APPLE__))
+#include <linux/limits.h>
+#endif
 
 using namespace ice;
 
@@ -121,8 +119,11 @@ std::string Library::getPath(bool* okay)
     return ss.str();
 #endif // UNICODE
 #else
-        // Linux doesn't really have a way to get the library path from the handle and
-        // its recommended to use absolute paths when loading with dlopen().
+    char path[PATH_MAX+1] = {};
+    *okay = dlinfo(m_lib, RTLD_DI_ORIGIN, path) != -1;
+    std::stringstream ss;
+    ss << path << "/" << m_name;
+    return ss.str();
 #endif // WIN32
     return m_name;
 }

@@ -1,11 +1,4 @@
-/**
- * Ice multiplatform dynamic library loader.
- *
- * @copyright 2011 David Rebbe
- */
-
-#ifndef __ICE_LIBRARY_H__
-#define __ICE_LIBRARY_H__
+#pragma once
 
 #if (defined(_WIN32) || defined(__WIN32__))
 #ifndef WIN32_LEAN_AND_MEAN
@@ -39,5 +32,3 @@ public:
 
     HMODULE const &_library() const;
 };
-
-#endif // ice_library.h

@@ -1,5 +1,4 @@
-#ifndef __ICE_LIBRARY_MANAGER_H__
-#define __ICE_LIBRARY_MANAGER_H__
+#pragma once
 
 #include "ice_library.h"
 #include <map>
@@ -33,5 +32,3 @@ private:
     typedef std::map<std::string, ice::Library *> Libraries;
     Libraries m_libs;
 };
-
-#endif // __ICE_LIBRARY_MANAGER_H__

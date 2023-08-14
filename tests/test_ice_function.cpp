@@ -3,7 +3,7 @@
 #include <string>
 
 TEST_CASE("FunctionBasic", "[function]") {
-    auto library = ice::Library("libtest");
+    auto library = ice::Library("simple_test");
     // const char* hello(void)
     auto hello = ice::Function<const char* (void)>(&library, "hello");
     REQUIRE( std::string(hello()).compare("Hello World!") == 0 );

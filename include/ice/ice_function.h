@@ -1,11 +1,4 @@
-/**
- * Ice multiplatform dynamic library loader.
- *
- * @copyright 2011 David Rebbe
- */
-
-#ifndef __ICE_FUNCTIONS_H__
-#define __ICE_FUNCTIONS_H__
+#pragma once
 
 #include "ice_exception.h"
 #include "ice_library.h"
@@ -118,5 +111,3 @@ private:
 
     ice::Library *m_lib;
 };
-
-#endif // ice_function.h
