@@ -91,9 +91,9 @@ TEST_CASE("LibraryManagerBasic", "[librarymanager]") {
     // Test the library
     bool path_okay = false;
     auto path = library->getPath(&path_okay);
-    INFO("Library Path: " << path);
+    INFO("Library Path: " << path << " (path_okay: " << path_okay << ") (Complete path: " << name << ")");
     REQUIRE( path_okay == true );
-    REQUIRE( path.find(name) != std::string::npos );
+    REQUIRE( path.find(LIBRARY_NAME) != std::string::npos );
     REQUIRE( library->_library() != NULL );
     // Test a failure library being added
     try {
