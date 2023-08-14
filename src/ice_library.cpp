@@ -119,10 +119,11 @@ std::string Library::getPath(bool* okay)
     return ss.str();
 #endif // UNICODE
 #else
+    link_map *lm;
     char path[PATH_MAX+1] = {};
-    *okay = dlinfo(m_lib, RTLD_DI_ORIGIN, path) != -1;
+    *okay = dlinfo(m_lib, RTLD_DI_LINKMAP, &lm) != -1;
     std::stringstream ss;
-    ss << path << "/" << m_name;
+    ss << lm->l_name << "/" << m_name;
     return ss.str();
 #endif // WIN32
     return m_name;
