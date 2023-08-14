@@ -121,6 +121,7 @@ std::string Library::getPath(bool* okay)
 #endif // UNICODE
 #elif defined(__APPLE__)
     // Apple doesn't support RTLD_DI_LINKMAP
+    *okay = true;
     std::string loader = "@loader_path/";
     auto pos = m_name.find(loader);
     if (pos != std::string::npos) {
