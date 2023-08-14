@@ -82,8 +82,7 @@ const std::string LibraryName::build() const
 
     // Determine if we need to prepend the library path prefix for linux or mac
 #if (defined(_WIN32) || defined(__WIN32__))
-    prepend_loader = false;
-    prepend_origin = false;
+    // Nothing to do for the path on windows
 #elif (defined(__APPLE__))
     // Mac Library loader prefix here
     if (m_path_prefix == PathPrefixAlways || m_path_prefix == PathPrefixMacOnly) {

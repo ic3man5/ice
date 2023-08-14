@@ -2,7 +2,7 @@
 #include "ice_exception.h"
 #include <sstream>
 
-#if !(defined(_WIN32) || defined(__WIN32__)) || !(defined(__APPLE__))
+#if defined(__linux__)
 #include <linux/limits.h>
 #endif
 
