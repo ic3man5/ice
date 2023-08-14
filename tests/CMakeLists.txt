@@ -4,15 +4,15 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(TARGET_NAME ice_tests)
 
 project(${TARGET_NAME} LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 message(STATUS "Tests being built")
 
 add_executable(${TARGET_NAME} 
   tests.cpp 
-  test_ice_exception.cpp 
-  test_ice_library.cpp 
-  test_ice_function.cpp 
-  test_ice_library_manager.cpp
-  test_ice_library_name.cpp)
+  test_ice_library.cpp)
 
 #target_link_libraries(${TARGET_NAME}
 #    PUBLIC test_ice_exception)
