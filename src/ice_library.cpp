@@ -156,6 +156,11 @@ std::string Library::getPath(bool* okay)
     bool success = dlinfo(m_lib, RTLD_DI_LINKMAP, &lm) != -1;
     if (okay)
         *okay = success;
+    std::string origin = "${ORIGIN}/";
+    auto pos = m_name.find(origin);
+    if (pos != std::string::npos) {
+        m_name.replace(pos, origin.length(), "");
+    }
     std::stringstream ss;
     ss << lm->l_name << "/" << m_name;
     return ss.str();

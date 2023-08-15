@@ -53,6 +53,8 @@ TEST_CASE("LibraryBasic", "[library]")
     INFO("Library Path: " << path);
     REQUIRE(path_okay == true);
     REQUIRE(path.find("simple_test") != std::string::npos);
+    REQUIRE(path.find("${ORIGIN}/") == std::string::npos);
+    REQUIRE(path.find("@loader_path/") == std::string::npos);
 
     REQUIRE(library._library() != NULL);
 
