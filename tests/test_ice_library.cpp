@@ -2,6 +2,7 @@
 #include <catch2/catch_all.hpp>
 #include <string>
 #include <sstream>
+#include <filesystem>
 
 constexpr char LIBRARY_NAME[] = "simple_test";
 
@@ -42,6 +43,8 @@ TEST_CASE("LibraryNameBasic", "[library_name]")
 
 TEST_CASE("LibraryBasic", "[library]")
 {
+    namespace fs = std::filesystem;
+
     auto& name = getLibraryName().build();
     auto library = ice::Library(name);
 
@@ -55,6 +58,7 @@ TEST_CASE("LibraryBasic", "[library]")
     REQUIRE(path.find("simple_test") != std::string::npos);
     REQUIRE(path.find("${ORIGIN}/") == std::string::npos);
     REQUIRE(path.find("@loader_path/") == std::string::npos);
+    REQUIRE(fs::exists(fs::path(path)) == true);
 
     REQUIRE(library._library() != NULL);
 

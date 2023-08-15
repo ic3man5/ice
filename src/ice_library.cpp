@@ -143,27 +143,32 @@ std::string Library::getPath(bool* okay)
     // Apple doesn't support RTLD_DI_LINKMAP
     if (okay)
         *okay = true;
+    // Strip @loader_path from the path
     std::string loader = "@loader_path/";
-    auto pos = m_name.find(loader);
+    std::string new_name = m_name;
+    auto pos = new_name.find(loader);
     if (pos != std::string::npos) {
-        return m_name.replace(pos, loader.length(), "");
+        return new_name.replace(pos, loader.length(), "");
     } else {
-        return m_name;
+        return new_name;
     }
 #else
     link_map* lm;
     char path[PATH_MAX + 1] = {};
     bool success = dlinfo(m_lib, RTLD_DI_LINKMAP, &lm) != -1;
-    if (okay)
+    if (okay) {
         *okay = success;
-    std::string origin = "${ORIGIN}/";
-    auto pos = m_name.find(origin);
-    if (pos != std::string::npos) {
-        m_name.replace(pos, origin.length(), "");
     }
-    std::stringstream ss;
-    ss << lm->l_name << "/" << m_name;
-    return ss.str();
+    if (!success) {
+        std::string origin = "${ORIGIN}/";
+        std::string new_name = m_name;
+        auto pos = new_name.find(origin);
+        if (pos != std::string::npos) {
+            new_name.replace(pos, origin.length(), "");
+        }
+        return new_name;
+    }
+    return lm->l_name;
 #endif // WIN32
     return m_name;
 }
