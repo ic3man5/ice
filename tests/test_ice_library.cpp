@@ -115,8 +115,8 @@ TEST_CASE("LibraryManagerBasic", "[librarymanager]")
     REQUIRE(library->_library() != NULL);
     // Test a failure library being added
     try {
-        mgr.add("failure", "This_Should_Always_Fail", true);
-        // auto failure_library = ice::Library("This_Should_Always_Fail");
+        mgr.add("failure", "This_Should_Always_Fail", false);
+        REQUIRE(false);
     } catch (ice::Exception& ex) {
         auto error_msg = ex.whatString();
         INFO(error_msg);

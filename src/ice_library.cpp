@@ -65,7 +65,7 @@ Library::Library(std::string name, bool nothrow)
         LocalFree(buffer);
         m_last_error = err.str();
         m_has_error = true;
-        if (m_nothrow) {
+        if (!m_nothrow) {
             throw Exception(err.str());
         }
     }
