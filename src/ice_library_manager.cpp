@@ -14,13 +14,13 @@ LibraryManager::~LibraryManager()
         this->remove(iter->first);
 }
 
-void LibraryManager::add(std::string name, std::string path, bool replace)
+void LibraryManager::add(std::string name, std::string path, bool nothrow, bool replace)
 {
     if (replace && exists(name)) {
         remove(name);
-        m_libs[name] = new ice::Library(path);
+        m_libs[name] = new ice::Library(path, nothrow);
     } else if (!exists(name)) {
-        m_libs[name] = new ice::Library(path);
+        m_libs[name] = new ice::Library(path, nothrow);
     }
 }
 

@@ -10,8 +10,15 @@
 using namespace ice;
 
 Library::Library(std::string name)
+    : Library(name, false)
+{
+}
+
+Library::Library(std::string name, bool nothrow)
 {
     m_name = name;
+    m_nothrow = nothrow;
+    m_has_error = false;
 #if (defined(_WIN32) || defined(__WIN32__))
 #ifdef UNICODE
     int len = MultiByteToWideChar(CP_UTF8, 0, name.c_str(), -1, NULL, 0);
@@ -56,14 +63,22 @@ Library::Library(std::string name)
             err << " with error code: #" << error;
         }
         LocalFree(buffer);
-        throw Exception(err.str());
+        m_last_error = err.str();
+        m_has_error = true;
+        if (m_nothrow) {
+            throw Exception(err.str());
+        }
     }
 #else
     m_lib = dlopen(name.c_str(), RTLD_NOW);
     if (m_lib == NULL) {
         std::stringstream err;
         err << "Failed to open library '" << name << "': " << dlerror();
-        throw Exception(err.str());
+        m_last_error = err.str();
+        m_has_error = true;
+        if (!m_nothrow) {
+            throw Exception(err.str());
+        }
     }
 #endif
 }
@@ -88,7 +103,7 @@ std::string Library::getPath(bool* okay)
 {
     if (okay)
         *okay = false;
-    if (!isLoaded())
+    if (!isLoaded() || m_has_error)
         return m_name;
 #if (defined(_WIN32) || defined(__WIN32__))
     TCHAR buffer[MAX_PATH] = { 0 };
@@ -97,7 +112,12 @@ std::string Library::getPath(bool* okay)
         DWORD error = GetLastError();
         std::stringstream err;
         err << "Failed to get Library path: '" << m_name << "' with error code: #" << error;
-        throw Exception(err.str());
+        m_last_error = err.str();
+        m_has_error = true;
+        if (!nothrow) {
+            throw Exception(err.str());
+            return m_name;
+        }
     }
 #ifdef UNICODE
     int length = WideCharToMultiByte(CP_UTF8, 0, buffer, -1, NULL, 0, NULL, NULL);
@@ -131,8 +151,8 @@ std::string Library::getPath(bool* okay)
         return m_name;
     }
 #else
-    link_map *lm;
-    char path[PATH_MAX+1] = {};
+    link_map* lm;
+    char path[PATH_MAX + 1] = {};
     bool success = dlinfo(m_lib, RTLD_DI_LINKMAP, &lm) != -1;
     if (okay)
         *okay = success;
@@ -141,6 +161,16 @@ std::string Library::getPath(bool* okay)
     return ss.str();
 #endif // WIN32
     return m_name;
+}
+
+const bool Library::hasError() const
+{
+    return m_has_error;
+}
+
+const std::string Library::getLastError() const
+{
+    return m_last_error;
 }
 
 HMODULE const& Library::_library() const

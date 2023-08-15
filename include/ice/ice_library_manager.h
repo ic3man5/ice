@@ -15,7 +15,7 @@ public:
     LibraryManager(LibraryManager&) = delete;
     ~LibraryManager();
 
-    void add(std::string name, std::string path, bool replace = false);
+    void add(std::string name, std::string path, bool nothrow, bool replace = false);
     void remove(std::string name);
     void remove(ice::Library &library);
 
