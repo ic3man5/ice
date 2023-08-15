@@ -114,7 +114,7 @@ std::string Library::getPath(bool* okay)
         err << "Failed to get Library path: '" << m_name << "' with error code: #" << error;
         m_last_error = err.str();
         m_has_error = true;
-        if (!nothrow) {
+        if (!m_nothrow) {
             throw Exception(err.str());
             return m_name;
         }
