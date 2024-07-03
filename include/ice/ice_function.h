@@ -43,11 +43,6 @@ public:
     Function(ice::Library *library, unsigned int ordinal)
         : m_name(__ordinalToString(ordinal))
     {
-        /*
-        std::stringstream temp;
-        temp << "Ordinal " << ordinal;
-        m_name = temp.str().c_str();
-        */
         // Make sure the ordinal fits inside the lower word (16-bit)
         if (ordinal > 0xFFFF) {
             std::stringstream ss;
@@ -70,13 +65,10 @@ public:
             throw ice::Exception(err.str());
         }
 #else
-        m_func = reinterpret_cast<Signature *>(dlsym(library->_library(), (const char *)ordinal));
-        if (m_func == NULL) {
-            std::stringstream err;
-            err << "Failed to Retrieve address of function '" << m_name << "': " << dlerror() << " for library '"
-                << library->name() << "'";
-            throw ice::Exception(err.str());
-        }
+        std::stringstream err;
+        err << "Ordinal values are not supported on linux for library '"
+            << library->name() << "'";
+        throw ice::Exception(err.str());
 #endif
     }
     operator Signature *() const

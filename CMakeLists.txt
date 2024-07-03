@@ -4,6 +4,14 @@ project(ice VERSION 1.1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if (MSVC)
+    # warning level 4
+    add_compile_options(/W4)
+else()
+    # additional warnings
+    add_compile_options(-Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wfloat-equal)
+endif()
+
 add_library(ice STATIC
         src/ice_library.cpp
         src/ice_library_manager.cpp 

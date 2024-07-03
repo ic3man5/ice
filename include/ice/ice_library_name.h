@@ -45,14 +45,14 @@ class ice::LibraryName
 
     // Adds the "lib" prefix to the library name for dlopen/LoadLibrary calls
     LibraryName& setLibPrefix(LibPrefix lib_prefix);
-    const LibPrefix getLibPrefix() const;
+    LibPrefix getLibPrefix() const;
 
     // Prepends "${ORIGIN}/" or "@loader_path/" prefix
     LibraryName& setPathPrefix(PathPrefix path_prefix);
-    const PathPrefix getPathPrefix() const;
+    PathPrefix getPathPrefix() const;
 
     LibraryName& setExtensionEnabled(bool use_extension);
-    const bool getExtensionEnabled() const;
+    bool getExtensionEnabled() const;
     LibraryName& setExtension(const std::string extension);
     LibraryName& setDefaultExtension();
     const std::string getExtension() const;

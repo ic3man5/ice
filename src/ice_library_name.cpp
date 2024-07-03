@@ -19,20 +19,22 @@ std::string LibraryName::name() const
 
 LibraryName& LibraryName::setLibPrefix(LibPrefix lib_prefix)
 {
+    m_lib_prefix = lib_prefix;
     return *this;
 }
 
-const LibPrefix LibraryName::getLibPrefix() const
+LibPrefix LibraryName::getLibPrefix() const
 {
     return m_lib_prefix;
 }
 
 LibraryName& LibraryName::setPathPrefix(PathPrefix path_prefix)
 {
+    m_path_prefix = path_prefix;
     return *this;
 }
 
-const PathPrefix LibraryName::getPathPrefix() const
+PathPrefix LibraryName::getPathPrefix() const
 {
     return m_path_prefix;
 }
@@ -55,7 +57,7 @@ LibraryName& LibraryName::setDefaultExtension()
     return *this;
 }
 
-const bool LibraryName::getExtensionEnabled() const
+bool LibraryName::getExtensionEnabled() const
 {
     return m_use_extension;
 }
