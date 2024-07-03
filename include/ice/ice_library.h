@@ -33,7 +33,7 @@ public:
     std::string name() const { return m_name; }
 
     std::string getPath(bool *okay = NULL);
-    const bool hasError() const;
+    bool hasError() const;
     const std::string getLastError() const;
 
     HMODULE const &_library() const;
