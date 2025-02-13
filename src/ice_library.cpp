@@ -66,7 +66,7 @@ Library::Library(std::string name, bool nothrow)
         m_last_error = err.str();
         m_has_error = true;
         if (!m_nothrow) {
-            throw Exception(err.str());
+            throw ice::Exception(err.str());
         }
     }
 #else
@@ -107,7 +107,7 @@ std::string Library::getPath(bool* okay)
         return m_name;
 #if (defined(_WIN32) || defined(__WIN32__))
     TCHAR buffer[MAX_PATH] = { 0 };
-    int len = GetModuleFileName(m_lib, buffer, MAX_PATH);
+    auto len = GetModuleFileName(m_lib, buffer, MAX_PATH);
     if (!len) {
         DWORD error = GetLastError();
         std::stringstream err;
@@ -173,7 +173,7 @@ std::string Library::getPath(bool* okay)
     return m_name;
 }
 
-const bool Library::hasError() const
+bool Library::hasError() const
 {
     return m_has_error;
 }

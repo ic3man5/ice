@@ -28,6 +28,10 @@ enum PathPrefix
 };
 };
 
+#pragma warning(push)
+// warning C4820: 'ice::LibraryName': '7' bytes padding added after data member 'ice::LibraryName::m_use_extension'
+#pragma warning(disable: 4820)
+
 class ice::LibraryName
 {
     std::string m_name = "";
@@ -45,14 +49,14 @@ class ice::LibraryName
 
     // Adds the "lib" prefix to the library name for dlopen/LoadLibrary calls
     LibraryName& setLibPrefix(LibPrefix lib_prefix);
-    const LibPrefix getLibPrefix() const;
+    LibPrefix getLibPrefix() const;
 
     // Prepends "${ORIGIN}/" or "@loader_path/" prefix
     LibraryName& setPathPrefix(PathPrefix path_prefix);
-    const PathPrefix getPathPrefix() const;
+    PathPrefix getPathPrefix() const;
 
     LibraryName& setExtensionEnabled(bool use_extension);
-    const bool getExtensionEnabled() const;
+    bool getExtensionEnabled() const;
     LibraryName& setExtension(const std::string extension);
     LibraryName& setDefaultExtension();
     const std::string getExtension() const;
@@ -60,3 +64,5 @@ class ice::LibraryName
     const std::string getName() const;
     const std::string build() const;
 };
+
+#pragma warning(pop)

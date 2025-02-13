@@ -17,6 +17,10 @@ namespace ice {
 class Library;
 };
 
+#pragma warning(push)
+// warning C4820: 'ice::Library': '6' bytes padding added after data member 'ice::Library::m_has_error'
+#pragma warning(disable: 4820)
+
 class ice::Library {
     HMODULE m_lib = nullptr;
     std::string m_name;
@@ -33,8 +37,10 @@ public:
     std::string name() const { return m_name; }
 
     std::string getPath(bool *okay = NULL);
-    const bool hasError() const;
+    bool hasError() const;
     const std::string getLastError() const;
 
     HMODULE const &_library() const;
 };
+
+#pragma warning(pop)
