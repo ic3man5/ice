@@ -154,7 +154,6 @@ std::string Library::getPath(bool* okay)
     }
 #else
     link_map* lm;
-    char path[PATH_MAX + 1] = {};
     bool success = dlinfo(m_lib, RTLD_DI_LINKMAP, &lm) != -1;
     if (okay) {
         *okay = success;
